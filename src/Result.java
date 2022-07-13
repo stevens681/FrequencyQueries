@@ -11,7 +11,6 @@ public class Result {
         List<Integer> res = new ArrayList<>();
         HashMap<Integer, Integer> map = new HashMap<>();
 
-
         for (List<Integer> query : queries) {
             int q = query.get(0), elements = query.get(1);
             boolean flag = map.containsKey(elements);
@@ -28,7 +27,10 @@ public class Result {
                 }
                 case 2:
                     if (flag) {
-                        map.put(elements, map.get(elements) - 1);
+                        if(map.get(elements)<=1)
+                            map.remove(elements,1);
+                        else
+                            map.put(elements, map.get(elements) - 1);
                     }
                     break;
                 case 3:
@@ -53,46 +55,63 @@ public class Result {
 //                1 6
 //                2 5
 //                3 2""";
-        StringBuilder list = new StringBuilder();
-//        String list = """
-//                1 3
-//                2 3
-//                3 2
-//                1 4
-//                1 5
-//                1 5
-//                1 4
-//                3 2
-//                2 4
-//                3 2""";
+
+        String list = """
+                1 3
+                2 3
+                3 2
+                1 4
+                1 5
+                1 5
+                1 4
+                3 2
+                2 4
+                3 2""";
         List<List<Integer>> arr = new ArrayList<>();
+        String[] split = list.split("\n");
 
-//        String[] split = list.toString().split("\n");
-        try {
-            File myObj = new File("/Users/fernandorosa/IdeaProjects/Frequency Queries/src/Array");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                list.append(myReader.nextInt()).append("\n");
+        for(int i = 0; i<list.split("\n").length; i++){
 
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-        
-
-
-            String[] space = list.toString().split("\n");
-
+            String[] space = split[i].split("\\s");
             List<Integer> hold = new ArrayList<>();
             for (String s : space) {
                 hold.add(Integer.parseInt(s));
-
             }
-            if(!hold.isEmpty())arr.add(hold);
+            if(!hold.isEmpty())
+                arr.add(hold);
 
+        }
+//        StringBuilder list = new StringBuilder();
+//        int size = 0;
+////        String[] split = list.toString().split("\n");
+//        try {
+//            File myObj = new File("/Users/fernandorosa/IdeaProjects/Frequency Queries/src/Array");
+//            Scanner myReader = new Scanner(myObj);
+//
+//            while (myReader.hasNextLine()) {
+//                list.append(myReader.nextInt()).append("\n");
+//                size++;
+//
+//            }
+//            myReader.close();
+//        } catch (FileNotFoundException e) {
+//            System.out.println("An error occurred.");
+//            e.printStackTrace();
+//        }
+//
+//        for(int i = 0; i<size; i++) {
+//
+//
+//            String[] space = list.toString().split("\n");
+//
+//            List<Integer> hold = new ArrayList<>();
+//            for (String s : space) {
+//                hold.add(Integer.parseInt(s));
+//
+//            }
+//            if (!hold.isEmpty()) arr.add(hold);
+//        }
 
-        System.out.println(arr);
+        System.out.println(freqQuery(arr));
     }
 }
